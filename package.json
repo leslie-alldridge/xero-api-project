@@ -7,12 +7,13 @@
   "author": "Jordan Walsh <jordan.walsh@.xero.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "dependencies": {
     "express": "3.4.8",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.5",
+    "nodemon": "^1.18.3",
     "xero-node": "^3.0.0-alpha.10"
   },
   "engines": {
