@@ -1,7 +1,11 @@
 let contactNameInv = document.getElementsByClassName('contactName');
 let invDate = document.getElementsByClassName('invDate');
+let invTotal = document.getElementsByClassName('total');
+
 let formDate = document.getElementById('formDate');
 let formCustomer = document.getElementById('formCustomer');
+let formTotal = document.getElementById('totalValue');
+
 //alert('connected')
 
 //file is connected
@@ -20,9 +24,10 @@ function checkDupes () {
             dupeContact.push(String(contactNameInv[i].innerText));
             console.log(dupeContact);
 
+            //make contact names red
             contactNameInv[i].bgColor = 'red';
             contactNameInv[i+1].bgColor = 'red';
-
+            //populate form with contact info
             formCustomer.value = contactNameInv[i].innerText;
         }
     
@@ -33,10 +38,17 @@ function checkDupes () {
             dupeDate.push(String(invDate[i].innerText))
             console.log(dupeDate);
             
-
+            // mark duplicate dates as red
             invDate[i].bgColor = 'red';
             invDate[i+1].bgColor = 'red';
+
+            //populate form date values
             formDate.value = invDate[i].innerText
+            formTotal.value = Number(invTotal[i].innerText) + Number(invTotal[i+1].innerText);
+
+            //change bg to green for values
+            invTotal[i].bgColor = 'green';
+            invTotal[i+1].bgColor = 'green';
         }
     }
 }

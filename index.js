@@ -42,9 +42,9 @@ var exbhbsEngine = exphbs.create({
             }
         },
         debug: function(optionalValue) {
-            console.log("Current Context");
-            console.log("====================");
-            console.log(this);
+            // console.log("Current Context");
+            // console.log("====================");
+            // console.log(this);
 
             if (optionalValue) {
                 console.log("Value");
@@ -131,6 +131,7 @@ app.get('/', function(req, res) {
             overview: true
         }
     });
+    // res.redirect('/invoices')
 });
 
 // Redirected from xero with oauth results
@@ -147,31 +148,13 @@ app.get('/access', async function(req, res) {
     res.redirect(returnTo || '/');
 });
 
-app.get('/organisations', async function(req, res) {
-    authorizedOperation(req, res, '/organisations', async function(xeroClient) {
-        try {
-            let organisations = await xeroClient.organisations.get()
-            res.render('organisations', {
-                organisations: organisations.Organisations,
-                active: {
-                    organisations: true,
-                    nav: {
-                        accounting: true
-                    }
-                }
-            })
-        } catch (err) {
-            handleErr(err, req, res, 'organisations');
-        }
 
-    })
-});
-
+//view all invoices 
 app.get('/invoices', async function(req, res) {
     authorizedOperation(req, res, '/invoices', function(xeroClient) {
         xeroClient.invoices.get()
             .then(function(result) {
-                console.log(result)
+               
                 
                 res.render('invoices', {
                     invoices: result.Invoices,
@@ -186,54 +169,126 @@ app.get('/invoices', async function(req, res) {
             .catch(function(err) {
                 handleErr(err, req, res, 'invoices');
             })
-
     })
 });
 
-app.post('/createinvoice', async function(req, res) { 
-    console.log(req.body);
+// my attempt to do a post request to Xero and have the invoice display in my org as a draft
+// success msg returns but no invoice exists when I login - logs show it's a put request
+//docs say :
 
+//The PUT method is similar to the POST Invoices method, 
+//however you can only create new invoices with this method.
+
+//api status shows 200 green, my console logged data object is below
+
+//{ Id: '64694a3e-f87f-49c0-8bf1-af5e17681f03',
+// Status: 'OK',
+// ProviderName: 'Brojects',
+// DateTimeUTC: '/Date(1535402834440)/',
+// Invoices: 
+//  [ { Type: 'ACCREC',
+//      InvoiceID: '00000000-0000-0000-0000-000000000000',
+//      Payments: [],
+//      CreditNotes: [],
+//      Prepayments: [],
+//      Overpayments: [],
+//      HasErrors: true,
+//      IsDiscounted: false,
+//      Contact: [Object],
+//      DateString: '2018-08-28T00:00:00',
+//      Date: '/Date(1535414400000+0000)/',
+//      DueDateString: '2018-10-10T00:00:00',
+//      DueDate: '/Date(1539129600000+0000)/',
+//      Status: 'DRAFT',
+//      LineAmountTypes: 'Exclusive',
+//      LineItems: [Array],
+//      SubTotal: 22,
+//      TotalTax: 0,
+//      Total: 22,
+//      CurrencyCode: 'NZD',
+//      StatusAttributeString: 'ERROR',
+//      ValidationErrors: [Array] } ] }
+
+
+app.post('/createinvoice', async function(req, res) { 
+    console.log('you made it');
+    
+    try {
+        authorizedOperation(req, res, '/createinvoice', async function(xeroClient) {
+            console.log("you made it here *****")
+            var invoice = await xeroClient.invoices.create(
+                
+                //data object to pass to xero
+                {
+            
+                Type: req.body.Type,
+                Contact: {
+                    Name: req.body.Contact
+                },
+                DueDate: '2018-10-10',
+                LineItems: [{
+                    Description: req.body.Description,
+                    Quantity: req.body.Quantity,
+                    UnitAmount: req.body.Amount,
+                    AccountCode: 200,
+                    ItemCode: 'ABC123'
+                }],
+                Status: 'DRAFT'
+            }
+            
+        )
+        console.log(invoice);
+            res.render('createinvoice', { outcome: 'Invoice created', id: invoice.InvoiceID })
+        })
+    }
+    catch (err) {
+        res.render('createinvoice', { outcome: 'Error', err: err })
+    }
 })
 
-// app.use('/createinvoice', async function(req, res) {
-//     if (req.method == 'GET') {
-//         return res.render('createinvoice');
-//     } else if (req.method == 'POST') {
-//         res.send('he')
-        
-//         // res.send("you hit post") // this works
-//         return res.render('createinvoice', req.body);
-//         // try {
-//         //     authorizedOperation(req, res, '/createinvoice', async function(xeroClient) {
-//         //         console.log(req.body);
-//         //         var invoice = await xeroClient.invoices.create({
-                    
-                    
-//         //             Type: req.body.Type,
-//         //             Contact: {
-//         //                 Name: req.body.Contact
-//         //             },
-//         //             DueDate: '2014-10-01',
-//         //             LineItems: [{
-//         //                 Description: req.body.Description,
-//         //                 Quantity: req.body.Quantity,
-//         //                 UnitAmount: req.body.Amount,
-//         //                 AccountCode: 200,
-//         //                 ItemCode: 'ABC123'
-//         //             }],
-//         //             Status: 'DRAFT'
-//         //         });
+//xero's example, but i had issues using my own forms as their post requests were conflicting with
+//the route definition below
 
-//         //         res.render('createinvoice', { outcome: 'Invoice created', id: invoice.InvoiceID })
+app.use('/createinvoice', async function(req, res) {
+    if (req.method == 'GET') {
+        return res.render('createinvoice');
+    } else if (req.method == 'POST') {
+        try {
+            authorizedOperation(req, res, '/createinvoice', async function(xeroClient) {
+                var invoice = await xeroClient.invoices.create({
+                    Type: req.body.Type,
+                    Contact: {
+                        Name: req.body.Contact
+                    },
+                    DueDate: '2014-10-01',
+                    LineItems: [{
+                        Description: req.body.Description,
+                        Quantity: req.body.Quantity,
+                        UnitAmount: req.body.Amount,
+                        AccountCode: 400,
+                        ItemCode: 'ABC123'
+                    }],
+                    Status: 'DRAFT'
+                });
 
-//         //     })
-//         // }
-//         // catch (err) {
-//         //     res.render('createinvoice', { outcome: 'Error', err: err })
+                res.render('createinvoice', { outcome: 'Invoice created', id: invoice.InvoiceID })
 
-//         // }
-//     }
-// });
+            })
+        }
+        catch (err) {
+            res.render('createinvoice', { outcome: 'Error', err: err })
+
+        }
+    }
+});
+
+//post request to populate the create invoice page
+app.post('/createinvoice2', async function(req, res) { 
+    let customer = req.body.customer;
+    let date = req.body.date;
+    let total = req.body.total;
+    return res.render('createinvoice', {customer: customer, date: date, total: total})
+})
 
 app.use(function(req, res, next) {
     if (req.session)
