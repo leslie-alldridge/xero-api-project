@@ -172,6 +172,7 @@ app.get('/invoices', async function(req, res) {
         xeroClient.invoices.get()
             .then(function(result) {
                 console.log(result)
+                
                 res.render('invoices', {
                     invoices: result.Invoices,
                     active: {
@@ -189,38 +190,50 @@ app.get('/invoices', async function(req, res) {
     })
 });
 
-app.use('/createinvoice', async function(req, res) {
-    if (req.method == 'GET') {
-        return res.render('createinvoice');
-    } else if (req.method == 'POST') {
-        try {
-            authorizedOperation(req, res, '/createinvoice', async function(xeroClient) {
-                var invoice = await xeroClient.invoices.create({
-                    Type: req.body.Type,
-                    Contact: {
-                        Name: req.body.Contact
-                    },
-                    DueDate: '2014-10-01',
-                    LineItems: [{
-                        Description: req.body.Description,
-                        Quantity: req.body.Quantity,
-                        UnitAmount: req.body.Amount,
-                        AccountCode: 400,
-                        ItemCode: 'ABC123'
-                    }],
-                    Status: 'DRAFT'
-                });
+app.post('/createinvoice', async function(req, res) { 
+    console.log(req.body);
 
-                res.render('createinvoice', { outcome: 'Invoice created', id: invoice.InvoiceID })
+})
 
-            })
-        }
-        catch (err) {
-            res.render('createinvoice', { outcome: 'Error', err: err })
+// app.use('/createinvoice', async function(req, res) {
+//     if (req.method == 'GET') {
+//         return res.render('createinvoice');
+//     } else if (req.method == 'POST') {
+//         res.send('he')
+        
+//         // res.send("you hit post") // this works
+//         return res.render('createinvoice', req.body);
+//         // try {
+//         //     authorizedOperation(req, res, '/createinvoice', async function(xeroClient) {
+//         //         console.log(req.body);
+//         //         var invoice = await xeroClient.invoices.create({
+                    
+                    
+//         //             Type: req.body.Type,
+//         //             Contact: {
+//         //                 Name: req.body.Contact
+//         //             },
+//         //             DueDate: '2014-10-01',
+//         //             LineItems: [{
+//         //                 Description: req.body.Description,
+//         //                 Quantity: req.body.Quantity,
+//         //                 UnitAmount: req.body.Amount,
+//         //                 AccountCode: 200,
+//         //                 ItemCode: 'ABC123'
+//         //             }],
+//         //             Status: 'DRAFT'
+//         //         });
 
-        }
-    }
-});
+//         //         res.render('createinvoice', { outcome: 'Invoice created', id: invoice.InvoiceID })
+
+//         //     })
+//         // }
+//         // catch (err) {
+//         //     res.render('createinvoice', { outcome: 'Error', err: err })
+
+//         // }
+//     }
+// });
 
 app.use(function(req, res, next) {
     if (req.session)

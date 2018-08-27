@@ -1,5 +1,5 @@
 <h3>Invoices</h3>
-<table class="table table-bordered table-collapsed table-hover">
+<table id="sortable" class="table table-bordered table-collapsed table-hover">
     <thead>
         <tr>
             <th>Invoice Number</th>
@@ -7,7 +7,7 @@
             <th>Due Date</th>
             <th>Status</th>
             <th>Total</th>
-            <th>Attachments</th>
+            <th>Contact Name</th>
         </tr>
     </thead>
     <tbody>
@@ -20,6 +20,7 @@
             {{else}}
                 {{this.InvoiceID}}
             {{/if}}
+            
             </a>
         </td>
         {{else}}
@@ -32,13 +33,13 @@
             </a>
         </td>
         {{/ifCond}}
-        <td>{{ this.Date }}</td>
-        <td>{{ this.DueDate }}</td>
+        <td class="invDate">{{ this.DateString }}</td>
+        <td>{{ this.DueDateString }}</td>
         <td>{{ this.Status}}</td>
         <td>{{ this.Total }}</td>
-        <td>
-            {{#if this.HasAttachments }}
-                <a href="/attachments?entityID={{ this.InvoiceID }}&entityType=INVOICE">View</a>
+        <td class="contactName">
+            {{#if this.Contact }}
+                {{this.Contact.Name}}            
             {{/if}}
         </td>
     </tr>
@@ -71,5 +72,11 @@
     {{/each}}
     </tbody>
 </table>
+<button onclick="checkDupes()">Check for dupes</button>
+{{!-- <a id="createInv" href="/createinvoice">Create New Invoice</a> --}}
 
-<button id="check">Check Invoices</button>
+<form action="/createinvoice" method="POST">
+    <input name="date" id="formDate" type="text" value="">
+    <input name="customer" id="formCustomer" type="text" value="">
+    <input type="submit" value="submit">
+</form>
