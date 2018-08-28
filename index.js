@@ -173,20 +173,47 @@ app.get('/invoices', async function(req, res) {
 });
 
 app.post('/filter', async function(req, res) {
-    // console.log(req.body);
-    // let requestIntent = req.body.invoiceFilter;
-    // // if (requestIntent == 'ALL'){
-    // //     requestIntent = 
-    // // }
+    
+    let requestIntent = req.body.invoiceFilter;
+    console.log(requestIntent);
+
+    if (requestIntent == 'ALL'){
+        authorizedOperation(req, res, '/invoices', function(xeroClient) {
+            xeroClient.invoices.get()
+                .then(function(result) {
+                   
+                    
+                    res.render('invoices', {
+                        invoices: result.Invoices,
+                        active: {
+                            invoices: true,
+                            nav: {
+                                accounting: true
+                            }
+                        }
+                    });
+                })
+                .catch(function(err) {
+                    handleErr(err, req, res, 'invoices');
+                })
+        })
+    }
+
     authorizedOperation(req, res, '/filter', function(xeroClient) {
-        xeroClient.invoices.get("Invoices",
-            {"Status": "AUTHORISED"})
+
+        xeroClient.invoices.get(
+            // { where: {Statuses: 'PAID'} }
+            // { where: "Statuses=PAID" }
+            { Statuses: requestIntent }
+        )
         
             .then(function(result) {
-                console.log(result);
+                console.info(result + "returned paid invoices %%%%%%%%%");
+                console.info(result);
 
                 
                 res.render('invoices', {
+                    invoices: result.Invoices,
                     active: {
                         invoices: true,
                         nav: {
