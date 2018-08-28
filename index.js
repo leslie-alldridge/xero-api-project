@@ -126,12 +126,12 @@ app.get('/error', function(req, res) {
 
 // Home Page
 app.get('/', function(req, res) {
-    res.render('index', {
-        active: {
-            overview: true
-        }
-    });
-    // res.redirect('/invoices')
+    // res.render('index', {
+    //     active: {
+    //         overview: true
+    //     }
+    // });
+     res.redirect('/invoices')
 });
 
 // Redirected from xero with oauth results
@@ -158,6 +158,35 @@ app.get('/invoices', async function(req, res) {
                 
                 res.render('invoices', {
                     invoices: result.Invoices,
+                    active: {
+                        invoices: true,
+                        nav: {
+                            accounting: true
+                        }
+                    }
+                });
+            })
+            .catch(function(err) {
+                handleErr(err, req, res, 'invoices');
+            })
+    })
+});
+
+app.post('/filter', async function(req, res) {
+    // console.log(req.body);
+    // let requestIntent = req.body.invoiceFilter;
+    // // if (requestIntent == 'ALL'){
+    // //     requestIntent = 
+    // // }
+    authorizedOperation(req, res, '/filter', function(xeroClient) {
+        xeroClient.invoices.get("Invoices",
+            {"Status": "AUTHORISED"})
+        
+            .then(function(result) {
+                console.log(result);
+
+                
+                res.render('invoices', {
                     active: {
                         invoices: true,
                         nav: {
@@ -231,7 +260,7 @@ app.post('/createinvoice', async function(req, res) {
                     Quantity: req.body.Quantity,
                     UnitAmount: req.body.Amount,
                     AccountCode: 200,
-                    ItemCode: 'ABC123'
+                    ItemCode: ''
                 }],
                 Status: 'DRAFT'
             }

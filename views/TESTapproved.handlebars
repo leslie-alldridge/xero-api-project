@@ -14,10 +14,10 @@
     <tbody>
     
     {{#each invoices}}
-    {{!-- {{#if request.requestIntent '!==' 'ALL'}} --}}
-    {{!-- {{#if this.Status '==' request.requestIntent}} --}}
-    {{!-- {{/if }} --}}
+            {{!-- {{#ifCond this.Status '==' 'AUTHORISED'}} --}}
+{{#ifCond this.Status '==' 'DELETED'}}
     <tr class="accordion-toggle" data-toggle="collapse" data-target="#{{this.InvoiceID}}">
+        
         {{#ifCond this.Type '==' 'ACCREC'}}
         <td><a href="https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID={{ this.InvoiceID }}" target="_blank">
             {{#if this.InvoiceNumber}}
@@ -38,6 +38,7 @@
             </a>
         </td>
         {{/ifCond}}
+         {{/ifCond}}
         <td class="invDate">{{ this.DateString }}</td>
         <td>{{ this.DueDateString }}</td>
         <td>{{ this.Status}}</td>
@@ -73,8 +74,11 @@
             </table>
         </td>
     </tr>
+    
     {{/ifCond}}
+ {{/ifCond}}
     {{/each}}
+   
     </tbody>
 </table>
 <button onclick="checkDupes()">Check for dupes</button>
