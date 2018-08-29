@@ -5,6 +5,8 @@ const session = require('express-session');
 const XeroClient = require('xero-node').AccountingAPIClient;;
 const exphbs = require('express-handlebars');
 
+const {formatData} = require('./assets/js/func')
+
 var app = express();
 
 var exbhbsEngine = exphbs.create({
@@ -155,6 +157,7 @@ app.get('/invoices', async function(req, res) {
         xeroClient.invoices.get()
             .then(function(result) {
                
+                console.log(result.Invoices);
                 
                 res.render('invoices', {
                     invoices: result.Invoices,
@@ -172,61 +175,89 @@ app.get('/invoices', async function(req, res) {
     })
 });
 
-app.post('/filter', async function(req, res) {
-    
-    let requestIntent = req.body.invoiceFilter;
-    console.log(requestIntent);
+app.post('/filter', function (req, res) {
+    res.redirect('/filter')
+})
 
-    if (requestIntent == 'ALL'){
-        authorizedOperation(req, res, '/invoices', function(xeroClient) {
-            xeroClient.invoices.get()
-                .then(function(result) {
+app.get('/filter', function(req, res) {
+    authorizedOperation(req, res, '/invoices', function(xeroClient) {
+        xeroClient.invoices.get()
+            .then(function(result) {
+               
+                const names = formatData(result.Invoices)
+                console.log(names['TEST'].datesList[0]);
+                
+                res.render('filter', {
+                    names
+                    // active: {
+                    //     invoices: true,
+                    //     nav: {
+                    //         accounting: true
+                    //     }
+                    // }
+                });
+            })
+            .catch(function(err) {
+                handleErr(err, req, res, 'invoices');
+            })
+    })
+})
+
+// app.post('/filter', async function(req, res) {
+    
+//     let requestIntent = req.body.invoiceFilter;
+//     console.log(requestIntent);
+
+//     if (requestIntent == 'ALL'){
+//         authorizedOperation(req, res, '/invoices', function(xeroClient) {
+//             xeroClient.invoices.get()
+//                 .then(function(result) {
                    
                     
-                    res.render('invoices', {
-                        invoices: result.Invoices,
-                        active: {
-                            invoices: true,
-                            nav: {
-                                accounting: true
-                            }
-                        }
-                    });
-                })
-                .catch(function(err) {
-                    handleErr(err, req, res, 'invoices');
-                })
-        })
-    }
+//                     res.render('invoices', {
+//                         invoices: result.Invoices,
+//                         active: {
+//                             invoices: true,
+//                             nav: {
+//                                 accounting: true
+//                             }
+//                         }
+//                     });
+//                 })
+//                 .catch(function(err) {
+//                     handleErr(err, req, res, 'invoices');
+//                 })
+//         })
+//     }
 
-    authorizedOperation(req, res, '/filter', function(xeroClient) {
+//     authorizedOperation(req, res, '/filter', function(xeroClient) {
 
-        xeroClient.invoices.get(
-            // { where: {Statuses: 'PAID'} }
-            // { where: "Statuses=PAID" }
-            { Statuses: requestIntent }
-        )
+//         xeroClient.invoices.get(
+//             // { where: {Statuses: 'PAID'} }
+//             // { where: "Statuses=PAID" }
+//             { Statuses: requestIntent }
+//         )
         
-            .then(function(result) {
-                console.info(result + "returned paid invoices %%%%%%%%%");
-                console.info(result);
+//             .then(function(result) {
+//                 console.info(result + "returned paid invoices %%%%%%%%%");
+//                 console.info(result);
 
                 
-                res.render('invoices', {
-                    invoices: result.Invoices,
-                    active: {
-                        invoices: true,
-                        nav: {
-                            accounting: true
-                        }
-                    }
-                });
-            })
-            .catch(function(err) {
-                handleErr(err, req, res, 'invoices');
-            })
-    })
-});
+//                 res.render('invoices', {
+//                     invoices: result.Invoices,
+//                     active: {
+//                         invoices: true,
+//                         nav: {
+//                             accounting: true
+//                         }
+//                     }
+//                 });
+//             })
+//             .catch(function(err) {
+//                 handleErr(err, req, res, 'invoices');
+//             })
+//     })
+// });
 
 // my attempt to do a post request to Xero and have the invoice display in my org as a draft
 // success msg returns but no invoice exists when I login - logs show it's a put request
