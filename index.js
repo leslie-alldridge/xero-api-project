@@ -154,10 +154,12 @@ app.get('/access', async function(req, res) {
 //view all invoices 
 app.get('/invoices', async function(req, res) {
     authorizedOperation(req, res, '/invoices', function(xeroClient) {
-        xeroClient.invoices.get()
+        xeroClient.invoices.get(
+            { Statuses: 'AUTHORISED' }
+        )
             .then(function(result) {
                
-                console.log(result.Invoices);
+                //console.log(result.Invoices);
                 
                 res.render('invoices', {
                     invoices: result.Invoices,
@@ -181,12 +183,14 @@ app.post('/filter', function (req, res) {
 
 app.get('/filter', function(req, res) {
     authorizedOperation(req, res, '/invoices', function(xeroClient) {
-        xeroClient.invoices.get()
+        xeroClient.invoices.get(
+            { Statuses: 'AUTHORISED' }
+        )
             .then(function(result) {
                
                 const names = formatData(result.Invoices)
-                console.log(names['TEST'].datesList[0]);
-                
+                //console.log(names['lauren'].datesList[0]);
+                // console.info(names)
                 res.render('filter', {
                     names
                     // active: {

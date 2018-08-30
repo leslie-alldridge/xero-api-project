@@ -30,15 +30,17 @@
 // let dateholder = [];
 
 
+//BELOW IS LAST WORKING12222222222222222222222222
+
 function formatData (apiInfo) {
     // console.log({apiInfo});
 
-    const data = {}
-
+    let data = {}
+    
     for (let i = 0; i < apiInfo.length; i++) {
-        const invoice = apiInfo[i]
-        const name = invoice.Contact.Name
-        const date = invoice.DateString
+        let invoice = apiInfo[i]
+        let name = invoice.Contact.Name
+        let date = invoice.DateString
         // console.log({invoice});
         
         // console.log({name});
@@ -46,30 +48,39 @@ function formatData (apiInfo) {
         if (!data.hasOwnProperty(name)) data[name] = {
             total: 0,
             name,
-            dates: {}
+            dates: [] //this used to be {}
         }
 
-        if (!data[name].hasOwnProperty(date)) data[name]['dates'][date] = {
-            total: 0,
-            invoices: []
-        }
+        if (!data[name].hasOwnProperty(date)) {
+            data[name]['dates'][date] = {
+                total: 0,
+                invoices: []
+            }  
+        } 
 
         data[name].total += Number(invoice.Total)
         data[name]['dates'][date].total += Number(invoice.Total)
+        //console.log(invoice)
         data[name]['dates'][date].invoices.push(invoice)
+        //console.log(data[name]['dates'][date].invoices);
+        
     }
-
-    const names = Object.keys(data)
-
+    
+    
+    let names = Object.keys(data)
+    console.log(names);
+    
     names.forEach(name => {
-        const dates = Object.keys(data[name].dates)
+        let dates = Object.keys(data[name].dates)
         data[name].datesList = dates.map(date => {
+            //console.log(date);
+            
             data[name]['dates'][date].date = date
             return data[name]['dates'][date]
         })
     })
-
-    console.log(data);
+    console.log(data['lauren'].datesList[0]);
+    // console.dir(data);
     
     
     return data
@@ -111,11 +122,13 @@ function formatData (apiInfo) {
 //         data[name]['dates'][date].total += Number(invoice.total)
 //         data[name]['dates'][date].invoices.push(invoice)
 
-//         console.log({invoice})
+       
 //     }
-    
 //     console.log({data})
-// }
+//     return data
+// } 
+// //     console.log({data})
+// // }
 
 // function checkDates(duplicates) {
     

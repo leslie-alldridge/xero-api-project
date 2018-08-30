@@ -1,10 +1,14 @@
 {{#each names}}
     <h1>{{name}}</h1>
+    <p>Total Owed: <strong>${{total}}</strong></p>
     <table class="table">
         <tr>
             <th>Date</th>
             <th>Total</th>
         </tr>
+        {{#each dates}}
+        <p>{{invoice}}</p>
+        {{/each}}
         {{#each datesList}}
             <tr>    
                 <td>{{date}}</td>
