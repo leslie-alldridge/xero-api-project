@@ -1,5 +1,5 @@
 'use strict';
-
+const util = require('util')
 const express = require('express');
 const session = require('express-session');
 const XeroClient = require('xero-node').AccountingAPIClient;;
@@ -189,6 +189,8 @@ app.get('/filter', function(req, res) {
             .then(function(result) {
                
                 const names = formatData(result.Invoices)
+
+                console.log(util.inspect(names, false, null))
                 //console.log(names['lauren'].datesList[0]);
                 // console.info(names)
                 res.render('filter', {

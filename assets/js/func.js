@@ -51,24 +51,23 @@ function formatData (apiInfo) {
             dates: [] //this used to be {}
         }
 
-        if (!data[name].hasOwnProperty(date)) {
+        if (!data[name]['dates'].hasOwnProperty(date)) {
             data[name]['dates'][date] = {
                 total: 0,
                 invoices: []
             }  
+            console.info(data[name]['dates'][date]); //this logs every time the loop runs, appears to be emptying array of invoices
+            
         } 
 
         data[name].total += Number(invoice.Total)
         data[name]['dates'][date].total += Number(invoice.Total)
-        //console.log(invoice)
-        data[name]['dates'][date].invoices.push(invoice)
-        //console.log(data[name]['dates'][date].invoices);
-        
+        data[name]['dates'][date].invoices.push(invoice) //just pushing inv number for now to reduce log trail
     }
     
     
     let names = Object.keys(data)
-    console.log(names);
+    //console.log(names);
     
     names.forEach(name => {
         let dates = Object.keys(data[name].dates)
@@ -79,20 +78,20 @@ function formatData (apiInfo) {
             return data[name]['dates'][date]
         })
     })
-    console.log(data['lauren'].datesList[0]);
+    //console.log(data['lauren'].datesList[0]);
     // console.dir(data);
     
     
     return data
 }
 
-// function formatData (apiInfo) {
-//     console.log({apiInfo});
+// function checkDupes () {
+//     //console.log({apiInfo});
 
 //     const data = {}
 
-//     for (let i = 0; i < apiInfo.length; i++) {
-//         const element = apiInfo[i]
+//     for (let i = 0; i < contactNameInv.length; i++) {
+//         const element = contactNameInv[i]
 //         const name = element.innerText
 //         const row = element.parentNode
 //         console.log({row});
@@ -127,8 +126,8 @@ function formatData (apiInfo) {
 //     console.log({data})
 //     return data
 // } 
-// //     console.log({data})
-// // }
+//     console.log({data})
+// }
 
 // function checkDates(duplicates) {
     
@@ -163,4 +162,5 @@ function formatData (apiInfo) {
 
 module.exports = {
     formatData
+    // checkDupes
 }

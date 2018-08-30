@@ -14,6 +14,7 @@
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.5",
     "nodemon": "^1.18.3",
+    "util": "^0.11.0",
     "xero-node": "^3.0.0-alpha.10"
   },
   "engines": {
