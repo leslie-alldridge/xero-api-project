@@ -1,42 +1,38 @@
-# Xero Node - Sample Application
+# Duplicate Invoice Summarising Tool for Xero Accounting Software
 
-To help users get up and running with the xero-node SDK quickly, we've included a sample app that is written using the Express library.
+This app is built to help users who have created multi invoices for a customer on the same day, quickly total and create new "daily summary" invoices. 
 
-https://xero-sample-app.herokuapp.com
+### Guidelines
 
-### Clone the Repo
+The user can retrieve all their invoices from Xero (filter the list if preferred) and click the check for duplicates link. They'll see a page with all duplicates listed by contact and nested by date. 
 
-To get this sample app up and running follow these steps;
+By pressing create, a new window will display with information pre-populated to assist with invoice creation. Saving the invoice will create a new draft invoice in their Xero organisation.
 
-```
-git clone https://github.com/XeroAPI/xero-node-sample-app
-cd xero-node-sample-app
-yarn
-```
 
-### Modify the sample config file
+### Todo List
+## MVP: Achieved
 
-You'll then need to modify the config file available at `xero-node-sample-app/config/example_config.json`.
+Provide the ability to locate duplicate invoices for a customer, based on the invoice date.
+Allow the user to quickly create and post a summarized invoice to Xero.
+Goal: Enable users to easily identify where duplicates arise, remedy the problem and reduce overall invoicing volume. This will help them stay within our recommended limits and enjoy a rich experience on the Xero platform.
 
-```javascript
-{
-    "appType": "partner",
-    "consumerKey": "aaa",
-    "consumerSecret": "bbb",
-    "privateKeyPath": "C:\\keys\\privatekey.pem",
-    "callbackUrl": "http://localhost:3100/access"
-}
-```
+## Stretch: In progress
 
-* The `appType` determines whether you would like to run the sample app using your public or partner credentials.
-* The consumerKey/Secret should be provided depending on your app type
-
-Save this file as: `xero-node-sample-app/config/config.json`.
+Find duplicates for multiple customers: Done
+Add filter to view page to condense info: Done
+Add paging/a limit to reduce API call size:
+Add a 'more details' option to allow users to customize their invoices further:
+Pull the date through on the form instead of using the default of today's date: 
+Set up cookies for a nicer experience:
+Display granular invoice detail in stealth tab: 
+CSS and styling to provide a sleek experience: 
 
 ### Running the Sample App
 
 ```
-node xero-node-sample-app/index.js
+yarn 
+yarn start
+
 ```
 
-You should now see the prompt `listening on http://localhost:3100`.  Browse there and enjoy.
+You should now see `listening on http://localhost:3100`.  Browse there and reduce some duplicates!
