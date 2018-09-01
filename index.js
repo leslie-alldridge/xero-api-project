@@ -44,9 +44,9 @@ var exbhbsEngine = exphbs.create({
             }
         },
         debug: function(optionalValue) {
-            // console.log("Current Context");
-            // console.log("====================");
-            // console.log(this);
+            console.log("Current Context");
+            console.log("====================");
+            console.log(this);
 
             if (optionalValue) {
                 console.log("Value");
@@ -128,11 +128,6 @@ app.get('/error', function(req, res) {
 
 // Home Page
 app.get('/', function(req, res) {
-    // res.render('index', {
-    //     active: {
-    //         overview: true
-    //     }
-    // });
      res.redirect('/invoices')
 });
 
@@ -159,7 +154,6 @@ app.get('/invoices', async function(req, res) {
         )
             .then(function(result) {
                
-                //console.log(result.Invoices);
                 
                 res.render('invoices', {
                     invoices: result.Invoices,
@@ -190,17 +184,9 @@ app.get('/filter', function(req, res) {
                
                 const names = formatData(result.Invoices)
 
-                console.log(util.inspect(names, false, null))
-                //console.log(names['lauren'].datesList[0]);
-                // console.info(names)
+                //console.log(util.inspect(names, false, null))
                 res.render('filter', {
                     names
-                    // active: {
-                    //     invoices: true,
-                    //     nav: {
-                    //         accounting: true
-                    //     }
-                    // }
                 });
             })
             .catch(function(err) {
@@ -209,103 +195,9 @@ app.get('/filter', function(req, res) {
     })
 })
 
-// app.post('/filter', async function(req, res) {
-    
-//     let requestIntent = req.body.invoiceFilter;
-//     console.log(requestIntent);
-
-//     if (requestIntent == 'ALL'){
-//         authorizedOperation(req, res, '/invoices', function(xeroClient) {
-//             xeroClient.invoices.get()
-//                 .then(function(result) {
-                   
-                    
-//                     res.render('invoices', {
-//                         invoices: result.Invoices,
-//                         active: {
-//                             invoices: true,
-//                             nav: {
-//                                 accounting: true
-//                             }
-//                         }
-//                     });
-//                 })
-//                 .catch(function(err) {
-//                     handleErr(err, req, res, 'invoices');
-//                 })
-//         })
-//     }
-
-//     authorizedOperation(req, res, '/filter', function(xeroClient) {
-
-//         xeroClient.invoices.get(
-//             // { where: {Statuses: 'PAID'} }
-//             // { where: "Statuses=PAID" }
-//             { Statuses: requestIntent }
-//         )
-        
-//             .then(function(result) {
-//                 console.info(result + "returned paid invoices %%%%%%%%%");
-//                 console.info(result);
-
-                
-//                 res.render('invoices', {
-//                     invoices: result.Invoices,
-//                     active: {
-//                         invoices: true,
-//                         nav: {
-//                             accounting: true
-//                         }
-//                     }
-//                 });
-//             })
-//             .catch(function(err) {
-//                 handleErr(err, req, res, 'invoices');
-//             })
-//     })
-// });
-
-// my attempt to do a post request to Xero and have the invoice display in my org as a draft
-// success msg returns but no invoice exists when I login - logs show it's a put request
-//docs say :
-
-//The PUT method is similar to the POST Invoices method, 
-//however you can only create new invoices with this method.
-
-//api status shows 200 green, my console logged data object is below
-
-//{ Id: '64694a3e-f87f-49c0-8bf1-af5e17681f03',
-// Status: 'OK',
-// ProviderName: 'Brojects',
-// DateTimeUTC: '/Date(1535402834440)/',
-// Invoices: 
-//  [ { Type: 'ACCREC',
-//      InvoiceID: '00000000-0000-0000-0000-000000000000',
-//      Payments: [],
-//      CreditNotes: [],
-//      Prepayments: [],
-//      Overpayments: [],
-//      HasErrors: true,
-//      IsDiscounted: false,
-//      Contact: [Object],
-//      DateString: '2018-08-28T00:00:00',
-//      Date: '/Date(1535414400000+0000)/',
-//      DueDateString: '2018-10-10T00:00:00',
-//      DueDate: '/Date(1539129600000+0000)/',
-//      Status: 'DRAFT',
-//      LineAmountTypes: 'Exclusive',
-//      LineItems: [Array],
-//      SubTotal: 22,
-//      TotalTax: 0,
-//      Total: 22,
-//      CurrencyCode: 'NZD',
-//      StatusAttributeString: 'ERROR',
-//      ValidationErrors: [Array] } ] }
-
-
 app.post('/createinvoice', async function(req, res) { 
     console.log('you made it');
-    
+    console.log(req.body.duplicate)
     try {
         authorizedOperation(req, res, '/createinvoice', async function(xeroClient) {
             console.log("you made it here *****")
@@ -329,59 +221,68 @@ app.post('/createinvoice', async function(req, res) {
                 Status: 'DRAFT'
             }
             
-        )
-        console.log(invoice);
-            res.render('createinvoice', { outcome: 'Invoice created', id: invoice.InvoiceID })
+        ).then((data) => {
+            console.log(invoice);
+            res.redirect('invoices')
         })
+        })
+        
     }
     catch (err) {
         res.render('createinvoice', { outcome: 'Error', err: err })
     }
 })
 
-//xero's example, but i had issues using my own forms as their post requests were conflicting with
-//the route definition below
-
-app.use('/createinvoice', async function(req, res) {
-    if (req.method == 'GET') {
-        return res.render('createinvoice');
-    } else if (req.method == 'POST') {
-        try {
-            authorizedOperation(req, res, '/createinvoice', async function(xeroClient) {
-                var invoice = await xeroClient.invoices.create({
-                    Type: req.body.Type,
-                    Contact: {
-                        Name: req.body.Contact
-                    },
-                    DueDate: '2014-10-01',
-                    LineItems: [{
-                        Description: req.body.Description,
-                        Quantity: req.body.Quantity,
-                        UnitAmount: req.body.Amount,
-                        AccountCode: 400,
-                        ItemCode: 'ABC123'
-                    }],
-                    Status: 'DRAFT'
+app.post('/status', async function(req, res) {
+    authorizedOperation(req, res, '/invoices', function(xeroClient) {
+        console.log(req.body);
+        let request = req.body.invoiceFilter
+        if (request == 'ALL'){
+            xeroClient.invoices.get().then(function(result) {
+                   
+                    
+                res.render('invoices', {
+                    invoices: result.Invoices,
+                    active: {
+                        invoices: true,
+                        nav: {
+                            accounting: true
+                        }
+                    }
                 });
-
-                res.render('createinvoice', { outcome: 'Invoice created', id: invoice.InvoiceID })
-
             })
-        }
-        catch (err) {
-            res.render('createinvoice', { outcome: 'Error', err: err })
-
-        }
-    }
-});
-
-//post request to populate the create invoice page
-app.post('/createinvoice2', async function(req, res) { 
-    let customer = req.body.customer;
-    let date = req.body.date;
-    let total = req.body.total;
-    return res.render('createinvoice', {customer: customer, date: date, total: total})
+            .catch(function(err) {
+                handleErr(err, req, res, 'invoices');
+            })
+        } else {
+        xeroClient.invoices.get(
+            { Statuses: request }
+        ).then(function(result) {
+               
+                
+            res.render('invoices', {
+                invoices: result.Invoices,
+                active: {
+                    invoices: true,
+                    nav: {
+                        accounting: true
+                    }
+                }
+            });
+        })
+        .catch(function(err) {
+            handleErr(err, req, res, 'invoices');
+        })
+}})
 })
+
+app.get('/createinvoice', async function(req, res) {
+    let inv = req.query.inv; 
+    let customer = req.query.name;
+    let date = req.query.date;
+    let total = req.query.total;
+    return res.render('createinvoice', {customer: customer, date: date, total: total});
+});
 
 app.use(function(req, res, next) {
     if (req.session)

@@ -1,24 +1,19 @@
 {{#each names}}
     <h1>{{name}}</h1>
     <p>Total Owed: <strong>${{total}}</strong></p>
-    <table class="table">
+    <table class="table table-hover">
         <tr>
             <th>Date</th>
             <th>Total</th>
         </tr>
-        {{#each dates}}
-        <p>{{invoice}}</p>
-        {{/each}}
         {{#each datesList}}
             <tr>    
                 <td>{{date}}</td>
-                <td>${{total}}</td>
+                <td>${{total}}<a href="/createinvoice/?name={{../name}}&date={{date}}&total={{total}}">Create</a></td>
             </tr>
-            <table class="table">
-                {{#each invoices}}
-                    <tr><td>{{Total}}</td></tr>
-                {{/each}}
-            </table>
+            {{#each invoices}}
+                <p id="stealth">{{InvoiceNumber}} on {{../date}}</p>
+            {{/each}}
         {{/each}}
     </table>
 {{/each}}

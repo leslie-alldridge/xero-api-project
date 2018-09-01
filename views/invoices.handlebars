@@ -1,4 +1,10 @@
 <h3>Invoices</h3>
+
+{{#if outcome }}
+<h2>{{ outcome }}</h2>
+<a href="/invoices">Click me</a></p>
+{{/if}} 
+
 <p>{{result}}</p>
 <table id="sortable" class="table table-bordered table-collapsed table-hover">
     <thead>
@@ -14,9 +20,6 @@
     <tbody>
     
     {{#each invoices}}
-    {{!-- {{#if request.requestIntent '!==' 'ALL'}} --}}
-    {{!-- {{#if this.Status '==' request.requestIntent}} --}}
-    {{!-- {{/if }} --}}
     <tr class="accordion-toggle" data-toggle="collapse" data-target="#{{this.InvoiceID}}">
         {{#ifCond this.Type '==' 'ACCREC'}}
         <td><a href="https://go.xero.com/AccountsReceivable/View.aspx?InvoiceID={{ this.InvoiceID }}" target="_blank">
@@ -78,19 +81,10 @@
     </tbody>
 </table>
 <a href="/filter">Check Dupes</a>
-<button onclick="checkDupes()">Check for dupes</button>
-{{!-- <a id="createInv" href="/createinvoice">Create New Invoice</a> --}}
-
-<form action="/createinvoice2" method="POST">
-    <input name="date" id="formDate" type="text" value="">
-    <input name="customer" id="formCustomer" type="text" value="">
-    <input name="total" id="totalValue" type="text" value="">
-    <input type="submit" value="submit">
-</form>
 
 <p>Filter invoice status:</p>
 
-<form action='/filter' method="POST">
+<form action='/status' method="POST">
 <select name="invoiceFilter">
   <option value="ALL">All</option>
   <option value="AUTHORISED">Approved</option>
