@@ -34,6 +34,4 @@ Updated dependencies to latest:
 yarn 
 yarn start
 ```
-open localhost:3100
-
 You should now see `listening on http://localhost:3100`.  Browse there and reduce some duplicates!
