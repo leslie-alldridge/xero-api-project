@@ -6,7 +6,7 @@ This app is built to help users who have created multi invoices for a customer o
 
 After informing many users that their invoicing habits are the reason for performance issues in Xero, I thought to myself there must be a better way. A tool that could squash duplicate invoices into a single invoice for the contact, is ideal. That way we could tell users that we understand this will take a bit of time but it's possible to quickly: 
 
- # | Action in App
+   | Action in App
 ---| -------------
 1.  | Create daily summary invoices with this app.
 2.  | Pop into Xero and void/remove singular invoices (INV numbers available in this app to make this easier)
