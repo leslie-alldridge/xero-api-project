@@ -68,7 +68,7 @@ app.use(express.bodyParser());
 app.set('trust proxy', 1);
 app.use(session({
     secret: 'something crazy',
-    resave: false,
+    resave: true,
     saveUninitialized: true,
     cookie: { secure: false }
 }));
