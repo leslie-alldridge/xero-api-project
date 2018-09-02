@@ -7,7 +7,7 @@
             <th>Total</th>
         </tr>
         {{#each datesList}}
-            <tr>    
+            <tr id="tRow">    
                 <td>{{date}}</td>
                 <td id="data">${{total}}<a id="linkFilter" href="/createinvoice/?name={{../name}}&date={{date}}&total={{total}}">Create</a></td>
             </tr>

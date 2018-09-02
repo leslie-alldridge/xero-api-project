@@ -135,13 +135,14 @@ body {
     max-width: 80px;
     display: inline-block;
     padding-bottom: 15px;
-    padding: 0;
+    padding-top: 2px;
 }
 #navCon {
     padding-top: 50px;
 }
 #bodyCon {
    margin-top: 18px; 
+   max-width: 65%;
 }
 #helpHead {
     padding-top: 8px;
@@ -226,6 +227,13 @@ body {
     padding-top: 0px;
 }
 
+#headText {
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+    font-size: 1.5em;
+    padding-left: 0px;
+}
+
 #data {
     max-width: 128px;
     min-width: 128px;
@@ -238,4 +246,8 @@ body {
 
 #navvy {
     max-height: 12px;
+}
+
+#tRow {
+    border-bottom: 1px solid rgb(219, 214, 214);
 }
