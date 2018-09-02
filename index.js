@@ -205,20 +205,21 @@ app.post('/createinvoice', async function(req, res) {
                 
                 //data object to pass to xero
                 {
-            
+                Reference: req.body.Reference || '',
                 Type: req.body.Type,
                 Contact: {
                     Name: req.body.Contact
                 },
-                DueDate: '2018-10-10',
+                Date: req.body.Date, 
+                DueDate: req.body.DueDate || '',
                 LineItems: [{
                     Description: req.body.Description,
                     Quantity: req.body.Quantity,
                     UnitAmount: req.body.Amount,
-                    AccountCode: 200,
-                    ItemCode: ''
+                    AccountCode: req.body.AccountCode || '',
+                    ItemCode: req.body.ItemCode || ''
                 }],
-                Status: 'DRAFT'
+                Status: req.body.Status
             }
             
         ).then((data) => {

@@ -8,12 +8,24 @@
   <select name="Type">
     <option value="ACCREC">Accounts Receivable</option>
   </select> 
-  Contact <input name="Contact" type="text" value="{{customer}}"><br> 
-  Date <input name="Date" type="text" value="{{date}}"><br>
-  Description <input name="Description" type="text" value="Daily sales for {{customer}}"> 
-  Quantity <input name="Quantity" type="number" value="1"> 
-  Amount <input name="Amount" type="number" value="{{total}}">
-  Dupes <input name="duplicate" type="hidden" value="testdupes">
+  Contact<input name="Contact" type="text" value="{{customer}}"><br> 
+  Date<input name="Date" type="text" value="{{date}}"><br>
+  Description<input name="Description" type="text" value="Daily sales for {{customer}}"> 
+  Quantity<input name="Quantity" type="number" value="1"> 
+  Amount<input name="Amount" type="number" value="{{total}}">
+   <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+    Add more detail
+  </a>
+  <div class="collapse" id="collapseExample">
+ Due Date<input  name="DueDate" type="text" value="" placeholder="e.g. 2018-08-30"><br>
+ Reference<input  name="Reference" type="text" value="" placeholder="reference"><br>
+ Item Code<input  name="ItemCode" type="text" value="" placeholder="e.g. Daily-Sales"><br>
+ Account Code<input  name="AccountCode" type="text" value="" placeholder="e.g. 200"><br>
+  <select name="Status">
+    <option value="DRAFT">Draft</option>
+    <option value="AUTHORISED">Approved</option>
+  </select> 
+  </div>
   <br>
-  <input type="submit" value="Submit">
+  <input class="btn btn-primary" type="submit" value="Submit">
 </form>
