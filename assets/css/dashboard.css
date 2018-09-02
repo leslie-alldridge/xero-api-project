@@ -27,6 +27,7 @@ body {
 
 .navbar-fixed-top {
     border: 0;
+   padding-bottom: 30px;
 }
 
 
@@ -126,4 +127,59 @@ body {
 
 #stealth {
     display: none;
+}
+
+#imgHead {
+    max-height: 80px;
+    max-width: 80px;
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+#navCon {
+    padding-top: 50px;
+}
+#bodyCon {
+   margin-top: 18px; 
+}
+#helpHead {
+    padding-top: 8px;
+}
+
+#statusSelect {
+    display: inline;
+    padding-left: 5px;
+    max-width: 60px;
+}
+
+#submit {
+    max-height: 24px;
+    padding-top: 0px;
+    padding-left: 3px;
+    padding-right: 3px;
+}
+
+#link {  
+    border-radius: 4px;
+    background-color: #5cb85c;
+    color:white;
+    text-decoration: none;
+    /* border: 1px solid black; */
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+}
+
+#linkFilter {
+    border-radius: 4px;
+    background-color: #5cb85c;
+    color:white;
+    text-decoration: none;
+    /* border: 1px solid black; */
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 5px;
+    margin-left: 15px;
 }

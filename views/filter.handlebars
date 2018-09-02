@@ -9,7 +9,7 @@
         {{#each datesList}}
             <tr>    
                 <td>{{date}}</td>
-                <td>${{total}}<a href="/createinvoice/?name={{../name}}&date={{date}}&total={{total}}">Create</a></td>
+                <td>${{total}}<a id="linkFilter" href="/createinvoice/?name={{../name}}&date={{date}}&total={{total}}">Create</a></td>
             </tr>
             {{#each invoices}}
                 <p id="stealth">{{InvoiceNumber}} on {{../date}}</p>

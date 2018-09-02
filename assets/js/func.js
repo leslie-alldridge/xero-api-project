@@ -39,5 +39,5 @@ formatData = (apiInfo) => {
 }
 
 module.exports = {
-    formatData
+    formatData: formatData
 }

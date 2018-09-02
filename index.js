@@ -186,7 +186,7 @@ app.get('/filter', function(req, res) {
 
                 //console.log(util.inspect(names, false, null))
                 res.render('filter', {
-                    names
+                    names, filter: true
                 });
             })
             .catch(function(err) {
@@ -277,12 +277,16 @@ app.post('/status', async function(req, res) {
 }})
 })
 
+app.get('/help', async function(req, res) {
+    return res.render('help', {help: true});
+})
+
 app.get('/createinvoice', async function(req, res) {
     let inv = req.query.inv; 
     let customer = req.query.name;
     let date = req.query.date;
     let total = req.query.total;
-    return res.render('createinvoice', {customer: customer, date: date, total: total});
+    return res.render('createinvoice', {success: true, customer: customer, date: date, total: total});
 });
 
 app.use(function(req, res, next) {

@@ -11,7 +11,18 @@
             <th>Invoice Number</th>
             <th>Date</th>
             <th>Due Date</th>
-            <th>Status</th>
+            <th >Status
+
+<form id="statusSelect" action='/status' method="POST">
+<select name="invoiceFilter">
+  <option value="ALL">All</option>
+  <option value="AUTHORISED">Approved</option>
+  <option value="DRAFT">Draft</option>
+  <option value="DELETED">Deleted</option>
+  <option value="PAID">Paid</option>
+</select>
+<input class="btn btn-success" id="submit" type="submit" value="Update" />
+</form></th>
             <th>Total</th>
             <th>Contact Name</th>
         </tr>
@@ -79,17 +90,6 @@
     {{/each}}
     </tbody>
 </table>
-<a href="/filter">Check Dupes</a>
+<a id="link" href="/filter">Check Dupes</a>
 
-<p>Filter invoice status:</p>
 
-<form action='/status' method="POST">
-<select name="invoiceFilter">
-  <option value="ALL">All</option>
-  <option value="AUTHORISED">Approved</option>
-  <option value="DRAFT">Draft</option>
-  <option value="DELETED">Deleted</option>
-  <option value="PAID">Paid</option>
-</select>
-<input id="submit" type="submit" value="Retrieve Invoices" />
-</form>
