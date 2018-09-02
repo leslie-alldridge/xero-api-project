@@ -26,9 +26,9 @@ Add filter to view page to condense info: Done
 
 Add paging/a limit to reduce API call size:
 
-Add a 'more details' option to allow users to customize their invoices further:
+Add a 'more details' option to allow users to customize their invoices further: Done
 
-Pull the date through on the form instead of using the default of today's date: 
+Pull the date through on the form instead of using the default of today's date: Done
 
 Set up cookies for a nicer experience:
 
