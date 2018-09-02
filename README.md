@@ -2,6 +2,16 @@
 
 This app is built to help users who have created multi invoices for a customer on the same day, quickly total and create new "daily summary" invoices. 
 
+### My Dream 
+
+After informing many users that their invoicing habits are the reason for performance issues in Xero, I thought to myself there must be a better way. A tool that could squash duplicate invoices into a single invoice for the contact, is ideal. That way we could tell users that we understand this will take a bit of time but it's possible to quickly: 
+#### 1. 
+Create daily summary invoices with this app.
+#### 2.
+Pop into Xero and void/remove singular invoices (INV numbers available in this app to make this easier) 
+#### 3.
+Use Find and Match to quickly reconcile with the new daily summary invoice. For example, two $100 invoces with payments will match to one $200 invoice.
+
 ### Guidelines
 
 The user can retrieve all their invoices from Xero (filter the list if preferred) and click the check for duplicates link. They'll see a page with all duplicates listed by contact and nested by date. 
@@ -10,6 +20,7 @@ By pressing create, a new window will display with information pre-populated to 
 
 
 ## Todo List
+
 ### MVP: Achieved
 
 Provide the ability to locate duplicate invoices for a customer, based on the invoice date.
@@ -30,13 +41,13 @@ Add a 'more details' option to allow users to customize their invoices further: 
 
 Pull the date through on the form instead of using the default of today's date: Done
 
-Set up cookies for a nicer experience:
+Set up cookies for a nicer experience: 
 
-Display granular invoice detail in stealth tab: 
+Display granular invoice detail in stealth tab: In progress - detail shows but isn't toggled yet
 
-CSS and styling to provide a sleek experience: 
+CSS and styling to provide a sleek experience: Done
 
-Updated dependencies to latest: 
+Updated dependencies to latest: In progress
 
 ### Running the Sample App
 
