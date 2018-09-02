@@ -48,6 +48,7 @@ formatData = (apiInfo) => {
 	})
 	return data
 }
+
 module.exports = {
 	formatData: formatData
 }
