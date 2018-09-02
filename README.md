@@ -13,19 +13,29 @@ By pressing create, a new window will display with information pre-populated to 
 ### MVP: Achieved
 
 Provide the ability to locate duplicate invoices for a customer, based on the invoice date.
+
 Allow the user to quickly create and post a summarized invoice to Xero.
+
 Goal: Enable users to easily identify where duplicates arise, remedy the problem and reduce overall invoicing volume. This will help them stay within our recommended limits and enjoy a rich experience on the Xero platform.
 
 ### Stretch: In progress
 
 Find duplicates for multiple customers: Done
+
 Add filter to view page to condense info: Done
+
 Add paging/a limit to reduce API call size:
+
 Add a 'more details' option to allow users to customize their invoices further:
+
 Pull the date through on the form instead of using the default of today's date: 
+
 Set up cookies for a nicer experience:
+
 Display granular invoice detail in stealth tab: 
+
 CSS and styling to provide a sleek experience: 
+
 Updated dependencies to latest: 
 
 ### Running the Sample App
