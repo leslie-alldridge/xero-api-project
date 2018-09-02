@@ -3,29 +3,42 @@
 {{/if}} 
 
 <h3>New Invoice Details</h3>
-<form method="POST" action="/createinvoice">
-  Invoice type 
-  <select name="Type">
+<div class="modal-body row">
+  <div class="col-md-6">
+<form class="form-group" id="main" method="POST" action="/createinvoice">
+  Invoice Type 
+  <select class="form-control" name="Type">
     <option value="ACCREC">Accounts Receivable</option>
   </select> 
-  Contact<input name="Contact" type="text" value="{{customer}}"><br> 
-  Date<input name="Date" type="text" value="{{date}}"><br>
-  Description<input name="Description" type="text" value="Daily sales for {{customer}}"> 
-  Quantity<input name="Quantity" type="number" value="1"> 
-  Amount<input name="Amount" type="number" value="{{total}}">
+  Contact<input class="form-control" name="Contact" type="text" value="{{customer}}">
+  Date<input class="form-control" name="Date" type="text" value="{{date}}">
+  Description<input class="form-control" name="Description" type="text" value="Daily sales for {{customer}}"> 
+  Quantity<input class="form-control" name="Quantity" type="number" value="1"> 
+  Amount<input class="form-control" name="Amount" type="number" value="{{total}}">
+   <div id="formbtns">
+   <div id="formBtn">
    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
     Add more detail
   </a>
-  <div class="collapse" id="collapseExample">
- Due Date<input  name="DueDate" type="text" value="" placeholder="e.g. 2018-08-30"><br>
- Reference<input  name="Reference" type="text" value="" placeholder="reference"><br>
- Item Code<input  name="ItemCode" type="text" value="" placeholder="e.g. Daily-Sales"><br>
- Account Code<input  name="AccountCode" type="text" value="" placeholder="e.g. 200"><br>
+  </div>
+  <div id="formBtn2">
+   <input class="btn btn-primary" type="submit" value="Submit">
+  </div>
+  </div></div>
+    <div class="col-md-6">
+
+  <div class="collapse form-column" id="collapseExample">
+ Due Date<input class="form-control" name="DueDate" type="text" value="" placeholder="e.g. 2018-08-30">
+ Reference<input class="form-control" name="Reference" type="text" value="" placeholder="reference">
+ Item Code<input class="form-control" name="ItemCode" type="text" value="" placeholder="e.g. Daily-Sales">
+ Account Code<input class="form-control" name="AccountCode" type="text" value="" placeholder="e.g. 200">
   <select name="Status">
     <option value="DRAFT">Draft</option>
     <option value="AUTHORISED">Approved</option>
   </select> 
+  <p id="note"><i><b>Please Note</b>: Approved invoices must have a <u>due date</u> and <u>account code</u> to be saved successfully.</i></p>
+  </div>
   </div>
   <br>
-  <input class="btn btn-primary" type="submit" value="Submit">
+ 
 </form>

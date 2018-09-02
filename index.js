@@ -152,9 +152,7 @@ app.get('/invoices', async function(req, res) {
         xeroClient.invoices.get(
             { Statuses: 'AUTHORISED' }
         )
-            .then(function(result) {
-               
-                
+            .then(function(result) { 
                 res.render('invoices', {
                     invoices: result.Invoices,
                     active: {

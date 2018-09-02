@@ -72,7 +72,7 @@ body {
 .nav-sidebar>li>a {
     padding-right: 20px;
     padding-left: 20px;
-    font-size: 0.9em;
+    font-size: 1em;
 }
 
 .nav-sidebar>.active>a,
@@ -166,9 +166,11 @@ body {
     text-decoration: none;
     /* border: 1px solid black; */
     padding-top: 5px;
+    margin-top: 20px;
     padding-left: 5px;
     padding-right: 5px;
-    padding-bottom: 5px;
+    margin-left: 20px;
+    max-height: 30px;
 }
 
 #linkFilter {
@@ -182,4 +184,54 @@ body {
     padding-right: 5px;
     padding-bottom: 5px;
     margin-left: 15px;
+    display: flex;
+    float: right;
+    
+}
+
+#main {
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+#collapseExample {
+    max-width: 400px;
+}
+#formbtns {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+#formBtn {
+  margin-right: 30px;
+  margin-top:10px;
+}
+#formBtn2 {
+    margin-top:10px;
+}
+
+.form-control {
+    margin-bottom: 10px;
+}
+
+#note {
+    margin-top:6px;
+}
+
+#title {
+    font-size: 1.5em;
+    margin-left: 3px;
+    padding-top: 10px;
+}
+
+#data {
+    max-width: 128px;
+    min-width: 128px;
+}
+
+#invContent {
+    display: flex;
+    flex-direction: row;
+   
 }
