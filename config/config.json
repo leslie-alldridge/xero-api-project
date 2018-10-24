@@ -1,8 +1,8 @@
 {
-        "appType": "public",
-        "callbackUrl": "http://localhost:3100/access",
-        "consumerKey": "JO3X0XWXAR4JGIDQ6T1IUX7ZAYBSNF",
-        "consumerSecret": "SKFNGZEV6GVP2TCUOMDVRDLAGSTO6J",        
-        "userAgent": "Tester (PUBLIC) - Application for testing Xero",
-        "redirectOnError": true
-} 
+  "appType": "public",
+  "callbackUrl": "https://v1invoicereducer.herokuapp.com/access",
+  "consumerKey": "RJ08CAJ1DVR5AB9GWI9S2F2QZZSNWH",
+  "consumerSecret": "V9OAAGBCP9YFBNPMMIQJD02JUDDW18",
+  "userAgent": "Tester (PUBLIC) - Application for testing Xero",
+  "redirectOnError": true
+}
